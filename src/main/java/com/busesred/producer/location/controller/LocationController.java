@@ -33,18 +33,18 @@ public class LocationController {
             producerService.sendLocation(locationMessage);
             
             Map<String, Object> response = new HashMap<>();
-            response.put("status", "success");
-            response.put("message", "Ubicación enviada a RabbitMQ correctamente");
-            response.put("data", locationMessage);
-            response.put("timestamp", LocalDateTime.now());
+            response.put("estado", "exitoso");
+            response.put("mensaje", "Ubicación enviada a RabbitMQ correctamente");
+            response.put("datos", locationMessage);
+            response.put("marca_tiempo", LocalDateTime.now());
             
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Error al enviar ubicación: ", e);
             Map<String, Object> response = new HashMap<>();
-            response.put("status", "error");
-            response.put("message", "Error al enviar ubicación: " + e.getMessage());
-            response.put("timestamp", LocalDateTime.now());
+            response.put("estado", "error");
+            response.put("mensaje", "Error al enviar ubicación: " + e.getMessage());
+            response.put("marca_tiempo", LocalDateTime.now());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -52,9 +52,9 @@ public class LocationController {
     @GetMapping("/health")
     public ResponseEntity<Map<String, String>> health() {
         Map<String, String> response = new HashMap<>();
-        response.put("status", "UP");
-        response.put("service", "producer-location-buses-red");
-        response.put("timestamp", LocalDateTime.now().toString());
+        response.put("estado", "ACTIVO");
+        response.put("servicio", "producer-location-buses-red");
+        response.put("marca_tiempo", LocalDateTime.now().toString());
         return ResponseEntity.ok(response);
     }
 }
